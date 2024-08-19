@@ -1,6 +1,7 @@
 class Livro:
-    def __init__(self, titulo, isbn, status):
+    def __init__(self, titulo, autor, isbn, status):
         self.titulo = titulo
+        self.autor = autor 
         self.isbn = isbn
         self.status = status
 
@@ -29,7 +30,7 @@ class Biblioteca:
         if resultados:
             print("Livros encontrados:")
             for livro in resultados:
-                print(f"{livro.titulo} - {livro.autor} - {livro.status}")
+                print(f"{livro.titulo} - {livro.autor} - {livro.status}") 
         else:
             print("Livro não encontrado")
     
@@ -44,6 +45,11 @@ class Biblioteca:
             for livro in resultados:
                 if livro.status == "Disponivel":
                     livro.status = "Emprestado"
+                    print(f"Livro {livro.titulo} emprestado.")
+                    return
+            print("Nenhum livro disponível para empréstimo.")
+        else:
+            print("Livro não encontrado.")
 
     def devolver_livro(self, titulo_devolve):
         resultados = [livro for livro in self.livros if titulo_devolve.lower() in livro.titulo.lower()]
@@ -51,6 +57,11 @@ class Biblioteca:
             for livro in resultados:
                 if livro.status == "Emprestado":
                     livro.status = "Disponivel"
+                    print(f"Livro {livro.titulo} devolvido.")
+                    return
+            print("Nenhum livro estava emprestado.")
+        else:
+            print("Livro não encontrado.")
 
 def menu():
     biblioteca = Biblioteca()
@@ -70,7 +81,7 @@ def menu():
             nacionalide = input("Digite a nacionalidade do autor: ")
             isbn = input("Digite o isbn do livro: ")
             status = "Disponivel"
-            biblioteca.adicionar_livro(titulo, autor, isbn, status, nacionalide)
+            biblioteca.adicionar_livro(titulo, autor, isbn, status)
 
         elif op == '2':
             titulo_busca = input("Digite o título do livro para buscar: ")
